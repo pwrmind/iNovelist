@@ -1,9 +1,13 @@
 var MenuList = React.createClass({
     render: function() {
-        var createItem = function(item) {
-        return <li key={item.id}>{item.title}</li>;
+        var createMenuItem = function(item) {
+            return <li key={item.id}>{item.title}</li>;
         };
-        return <ul>{this.props.items.map(createItem)}</ul>;
+        return (
+            <div id="MenuList">
+                <ul>{this.props.items.map(createMenuItem)}</ul>
+            </div>
+        );
     }
 });
 
@@ -12,41 +16,33 @@ var INovelistApp = React.createClass({
         return {
             items: [],
             text: '',
-            chapters: [
-                {
-                    id: 1,
-                    title: "Chapter A"
-                },
-                {
-                    id: 2,
-                    title: "Chapter B"
-                },
-                {
-                    id: 3,
-                    title: "Chapter C"
-                }
-            ],
+            chapters: [],
             scenes: []
         };
     },
     onChange: function(e) {
+        var findAllChapters = function(text) {
+            var chaptersWithoutId = text.match(/((\n\n\n\n|^).*?(?=\n|$))/g);
+            if (chaptersWithoutId.length === 0) {
+                return [];
+            }
+            var chaptersWithId = [];
+            for (var index = 0; index < chaptersWithoutId.length; index++) {
+                var element = chaptersWithoutId[index];
+                chaptersWithId = chaptersWithId.concat([{id: index, title: element}]);
+            }
+            return chaptersWithId;
+        };
+
         this.setState({text: e.target.value});
-    },
-    handleSubmit: function(e) {
-        e.preventDefault();
-        var nextItems = this.state.items.concat([{text: this.state.text, id: Date.now()}]);
-        var nextText = '';
-        this.setState({items: nextItems, text: nextText});
+        //e.preventDefault();
+        this.setState({chapters: findAllChapters(this.state.text)});
     },
     render: function() {
         return (
         <div>
-            <h3>TODO</h3>
             <MenuList items={this.state.chapters} />
-            <form onSubmit={this.handleSubmit}>
-            <input onChange={this.onChange} value={this.state.text} />
-            <button>{'Add #' + (this.state.items.length + 1)}</button>
-            </form>
+            <textarea onChange={this.onChange} value={this.state.text} />
         </div>
         );
     }
