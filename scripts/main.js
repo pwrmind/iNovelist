@@ -4,7 +4,7 @@ var MenuList = React.createClass({
             return <li key={item.id}>{item.title}</li>;
         };
         return (
-            <div id="MenuList">
+            <div id="menuList">
                 <ul>{this.props.items.map(createMenuItem)}</ul>
             </div>
         );
@@ -15,8 +15,8 @@ var INovelistApp = React.createClass({
     getInitialState: function() {
         return {
             items: [],
-            text: '',
-            chapters: [],
+            text: localStorage.getItem("text") || "",
+            chapters: JSON.parse(localStorage.getItem("chapters")) || [],
             scenes: []
         };
     },
@@ -28,21 +28,25 @@ var INovelistApp = React.createClass({
             }
             var chaptersWithId = [];
             for (var index = 0; index < chaptersWithoutId.length; index++) {
-                var element = chaptersWithoutId[index];
+                var element = chaptersWithoutId[index].replace(/\n\n\n\n/,"");
                 chaptersWithId = chaptersWithId.concat([{id: index, title: element}]);
             }
             return chaptersWithId;
         };
 
         this.setState({text: e.target.value});
+        localStorage.setItem("text", this.state.text);
         //e.preventDefault();
         this.setState({chapters: findAllChapters(this.state.text)});
+        localStorage.setItem("chapters", JSON.stringify(this.state.chapters));
     },
     render: function() {
         return (
         <div>
             <MenuList items={this.state.chapters} />
-            <textarea onChange={this.onChange} value={this.state.text} />
+            <div id="editor">
+                <textarea onChange={this.onChange} value={this.state.text} />
+            </div>
         </div>
         );
     }
