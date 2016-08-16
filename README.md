@@ -1,2 +1,2 @@
 # iNovelist
-Simple text editor for writing books. Try [demo](https://pwrmind.github.io/iNovelist/)
+Simple text editor for writing books in browser. Try [demo](https://pwrmind.github.io/iNovelist/)
