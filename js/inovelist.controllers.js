@@ -17,6 +17,15 @@ iNovelistControllers.controller('BookCtrl', ['$scope', '$http', '$routeParams', 
     $scope.params = $routeParams;
 }]);
 
+iNovelistControllers.controller('PreviewCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
+    $scope.params = $routeParams;
+    $scope.chapters = [];
+
+    if(localStorage["chapters"]) {
+      $scope.chapters = JSON.parse(localStorage["chapters"]);
+    }
+}]);
+
 iNovelistControllers.controller('ChaptersCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
     $scope.params = $routeParams;
 
@@ -36,42 +45,50 @@ iNovelistControllers.controller('ChaptersCtrl', ['$scope', '$http', '$routeParam
       $scope.selectedScene = newScene;
     };
 
-    $scope.chapters = [
-      {
-        id: 0,
-        name: "Глава 1",
-        description: "Местная кухня, Для особых случаев, Романтический, Для семей с детьми, Живописный вид",
-        scenes: [
-          {
-            id:0,
-            name: "Сцена 1",
-            text: "На реке. Лодку покачивает на волнах. Мешок измазанный черным. На берегу они. Река несёт по течению лодку. Луна освещает белую дорожку по воде. Дыхание и сердцебиение сложно восстановить."
-          },
-          {
-            id:1,
-            name: "Сцена 2",
-            text:"Он один. Несколько человек преграждают ему путь. Взрыв авто припаркованного в нескольких метрах от входа."
-          }
-        ]
-      },
-      {
-        id: 1,
-        name: "Глава 2",
-        description: "Деловые встречи, Живописный вид, Для особых случаев, Романтический, Местная кухня",
-        scenes: [
-          {
-            id:0,
-            name: "Сцена 1",
-            text:"От скорости у него снова начало всё сливаться."
-          },
-          {
-            id:1,
-            name: "Сцена 2",
-            text:"Месиво, кишки повсюду. Его взгляд - пелена перед глазами. Палач. "
-          }
-        ]
-      }
-    ];
+    if(localStorage["chapters"]) {
+      $scope.chapters = JSON.parse(localStorage["chapters"]);
+    } else {
+      $scope.chapters = [
+        {
+          id: 0,
+          name: "Глава 1",
+          description: "Местная кухня, Для особых случаев, Романтический, Для семей с детьми, Живописный вид",
+          scenes: [
+            {
+              id:0,
+              name: "Сцена 1",
+              text: "На реке. Лодку покачивает на волнах. Мешок измазанный черным. На берегу они. Река несёт по течению лодку. Луна освещает белую дорожку по воде. Дыхание и сердцебиение сложно восстановить."
+            },
+            {
+              id:1,
+              name: "Сцена 2",
+              text:"Он один. Несколько человек преграждают ему путь. Взрыв авто припаркованного в нескольких метрах от входа."
+            }
+          ]
+        },
+        {
+          id: 1,
+          name: "Глава 2",
+          description: "Деловые встречи, Живописный вид, Для особых случаев, Романтический, Местная кухня",
+          scenes: [
+            {
+              id:0,
+              name: "Сцена 1",
+              text:"От скорости у него снова начало всё сливаться."
+            },
+            {
+              id:1,
+              name: "Сцена 2",
+              text:"Месиво, кишки повсюду. Его взгляд - пелена перед глазами. Палач. "
+            }
+          ]
+        }
+      ];
+    }
+
+    $scope.$watch('chapters', function(newValue, oldValue) {
+      localStorage["chapters"] = JSON.stringify(newValue);
+    }, true);
 }]);
 
 iNovelistControllers.controller('PlacesCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
@@ -151,6 +168,10 @@ iNovelistControllers.controller('MainMenuCtrl', function ($scope) {
     {
       'title': 'Главы',
       'href': '#!/chapters'
+    },
+    {
+      'title': 'Предпросмотр',
+      'href': '#!/preview'
     },
     {
       'title': 'Персонажи',

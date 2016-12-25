@@ -18,6 +18,10 @@ iNovelistApp.config(['$routeProvider', '$locationProvider',
         templateUrl: 'blocks/chapters.html',
         controller: 'ChaptersCtrl'
       }).
+      when('/preview', {
+        templateUrl: 'blocks/preview.html',
+        controller: 'PreviewCtrl'
+      }).
       when('/characters', {
         templateUrl: 'blocks/characters.html',
         controller: 'CharactersCtrl'
