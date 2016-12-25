@@ -26,6 +26,16 @@ iNovelistControllers.controller('ChaptersCtrl', ['$scope', '$http', '$routeParam
       $scope.selectedScene = scene;
     };
 
+    $scope.addScene = function(chapter) {
+      var newScene = {
+        id: 0,
+        name: "Новая сцена",
+        text: ""
+      };
+      chapter.scenes.push(newScene);
+      $scope.selectedScene = newScene;
+    };
+
     $scope.chapters = [
       {
         id: 0,
