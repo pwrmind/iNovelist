@@ -30,7 +30,13 @@ html, body {
     width: 80px;
     height: 80px;
     background-color: goldenrod;
-    display: inline-block;
+    /*display: inline-block;*/
     margin-right: 4px;
     cursor: pointer;
+    float: left;
+}
+
+.character-list, .book-list {
+    width: calc(100% - 84px);
+    height: 80px;
 }
