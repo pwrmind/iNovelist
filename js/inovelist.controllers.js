@@ -17,6 +17,75 @@ iNovelistControllers.controller('BookCtrl', ['$scope', '$http', '$routeParams', 
     $scope.params = $routeParams;
 }]);
 
+iNovelistControllers.controller('ChaptersCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
+    $scope.params = $routeParams;
+
+    $scope.selectedScene = {};
+
+    $scope.selectScene = function(scene) {
+      $scope.selectedScene = scene;
+    };
+
+    $scope.chapters = [
+      {
+        id: 0,
+        name: "Глава 1",
+        description: "Местная кухня, Для особых случаев, Романтический, Для семей с детьми, Живописный вид",
+        scenes: [
+          {
+            id:0,
+            name: "Сцена 1",
+            text: "На реке. Лодку покачивает на волнах. Мешок измазанный черным. На берегу они. Река несёт по течению лодку. Луна освещает белую дорожку по воде. Дыхание и сердцебиение сложно восстановить."
+          },
+          {
+            id:1,
+            name: "Сцена 2",
+            text:"Он один. Несколько человек преграждают ему путь. Взрыв авто припаркованного в нескольких метрах от входа."
+          }
+        ]
+      },
+      {
+        id: 1,
+        name: "Глава 2",
+        description: "Деловые встречи, Живописный вид, Для особых случаев, Романтический, Местная кухня",
+        scenes: [
+          {
+            id:0,
+            name: "Сцена 1",
+            text:"От скорости у него снова начало всё сливаться."
+          },
+          {
+            id:1,
+            name: "Сцена 2",
+            text:"Месиво, кишки повсюду. Его взгляд - пелена перед глазами. Палач. "
+          }
+        ]
+      }
+    ];
+}]);
+
+iNovelistControllers.controller('PlacesCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
+    $scope.params = $routeParams;
+    $scope.selectedPlace = {};
+  
+    $scope.selectPlace = function(place) {
+      $scope.selectedPlace = place;
+    };
+
+    $scope.places = [
+      {
+        id: 0,
+        name: "58 Tour Eiffel",
+        description: "Местная кухня, Для особых случаев, Романтический, Для семей с детьми, Живописный вид"
+      },
+      {
+        id: 1,
+        name: "Le Jules Verne",
+        description: "Деловые встречи, Живописный вид, Для особых случаев, Романтический, Местная кухня"
+      }
+    ];
+}]);
+
 iNovelistControllers.controller('CharactersCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
   $scope.selectedCharacter = {};
   
@@ -70,12 +139,16 @@ iNovelistControllers.controller('MainMenuCtrl', function ($scope) {
       'href': '#!/books'
     },
     {
-      'title': 'Книга',
-      'href': '#!/books/1'
+      'title': 'Главы',
+      'href': '#!/chapters'
     },
     {
       'title': 'Персонажи',
       'href': '#!/characters'
+    },
+    {
+      'title': 'Места (Places)',
+      'href': '#!/places'
     }
   ];
 });
