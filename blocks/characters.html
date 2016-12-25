@@ -1,0 +1,43 @@
+<div><h2>Персонажи (Characters)</h2></div>
+<div>
+    <div><h4>Главные персонажи (Main characters):</h4></div>
+    <div class="character" ng-repeat="character in characters" ng-click="selectCharacter(character)">{{ character.firstName }}</div>
+    <div class="character">Добавить</div>
+</div>
+<div>
+    <div><h4>Второстепенные персонажи (Secondary characters):</h4></div>
+    <div class="character" ng-repeat="character in characters" ng-click="selectCharacter(character)">{{ character.firstName }}</div>
+    <div class="character">Добавить</div>
+</div>
+<hr>
+<div>
+    <div><h4>Характерисрики персонажа:</h4></div>
+    <div>
+        <table>
+            <tr>
+                <td>Имя (First name):</td>
+                <td><input type="text" ng-model="selectedCharacter.firstName"></td>
+            </tr>
+            <tr>
+                <td>Фамилия (Last name):</td>
+                <td><input type="text" ng-model="selectedCharacter.lastName"></td>
+            </tr>
+            <tr>
+                <td>Псевдоним (Alias):</td>
+                <td><input type="text" ng-model="selectedCharacter.alias"></td>
+            </tr>
+            <tr>
+                <td>Возраст (Age):</td>
+                <td><input type="text" ng-model="selectedCharacter.age"></td>
+            </tr>
+            <tr>
+                <td>Пол (Gender):</td>
+                <td><input type="text" ng-model="selectedCharacter.gender"></td>
+            </tr>
+            <tr>
+                <td>Родной город (Hometown):</td>
+                <td><input type="text" ng-model="selectedCharacter.hometown"></td>
+            </tr>
+        </table>
+    </div>
+</div>

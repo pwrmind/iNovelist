@@ -1,24 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>iNovelist</title>
-    <link rel="stylesheet" type="text/css" href="styles/main.css">
-    <script src="https://npmcdn.com/react@15.3.0/dist/react.js"></script>
-    <script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.js"></script>
-    <script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
-</head>
-<body>
-    <div id="header">
-        <div>iNovelist</div>
-        <div>Simple text editor for writing books in browser.</div>
-    </div>
-    <div id="iNovelist">
-
-    </div>
-    <div id="footer"></div>
-    <script type="text/babel" src="scripts/main.js"></script>
-    <script type="text/babel">
-
-    </script>
-</body>
+<html lang="ru" ng-app="iNovelistApp">  
+    <head>
+        <title>iNovelist</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/css/main.css">
+        <script src="/js/angular.min.js"></script>
+        <script src="/js/angular-route.min.js"></script>
+        <script src="/js/inovelist.app.js"></script>
+        <script src="/js/inovelist.controllers.js"></script>
+    </head>
+    <body>
+        <div id="mainMenu" ng-controller="MainMenuCtrl">
+            <div ng-repeat="menuItem in menuItems" ng-click="go(menuItem.href)" class="main-menu-item">{{ menuItem.title }}</div>
+        </div>
+        <div id="workspace" ng-view></div>
+    </body>
 </html>

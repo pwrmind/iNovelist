@@ -1,0 +1,36 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+    /*overflow: hidden;*/
+    /*height: 100%;*/
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+#mainMenu {
+    width: 80px;
+    height: 100vh;
+    position: absolute;
+    background-color: darkgoldenrod;
+}
+
+.main-menu-item {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 4px;
+    background-color: goldenrod;
+    cursor: pointer;
+}
+
+#workspace {
+    margin-left: 84px;
+}
+
+.character, .book {
+    width: 80px;
+    height: 80px;
+    background-color: goldenrod;
+    display: inline-block;
+    margin-right: 4px;
+    cursor: pointer;
+}
