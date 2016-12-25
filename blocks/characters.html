@@ -1,17 +1,21 @@
 <div><h2>Персонажи (Characters)</h2></div>
 <div>
     <div><h4>Главные персонажи (Main characters):</h4></div>
-    <div class="character" ng-repeat="character in characters" ng-click="selectCharacter(character)">{{ character.firstName }}</div>
-    <div class="character">Добавить</div>
+    <div class="character-list">
+        <div class="character" ng-repeat="character in characters" ng-click="selectCharacter(character)">{{ character.firstName }}</div>
+        <div class="character">Добавить</div>
+    </div>
 </div>
 <div>
     <div><h4>Второстепенные персонажи (Secondary characters):</h4></div>
-    <div class="character" ng-repeat="character in characters" ng-click="selectCharacter(character)">{{ character.firstName }}</div>
-    <div class="character">Добавить</div>
+    <div class="character-list">
+        <div class="character" ng-repeat="character in characters" ng-click="selectCharacter(character)">{{ character.firstName }}</div>
+        <div class="character">Добавить</div>
+    </div>
 </div>
 <hr>
 <div>
-    <div><h4>Характерисрики персонажа:</h4></div>
+    <div><h4>Характеристики персонажа (Character Traits):</h4></div>
     <div>
         <table>
             <tr>
