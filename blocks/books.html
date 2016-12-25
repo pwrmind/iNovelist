@@ -1,0 +1,12 @@
+<div><h2>Книги (Books)</h2></div>
+<div>
+    <div><h4>Мои книги (My books):</h4></div>
+    <div ng-repeat="book in books" class="book">{{ book.title }}</div>
+    <div class="book">Добавить</div>
+</div>
+<div>
+    <div><h4>Книги других авторов (Other books):</h4></div>
+    <div ng-repeat="book in books" class="book">{{ book.title }}</div>
+    <div class="book">Добавить</div>
+</div>
+<hr>

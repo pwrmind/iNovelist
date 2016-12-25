@@ -3,30 +3,28 @@ var iNovelistApp = angular.module('iNovelistApp', [
   'iNovelistControllers'
 ]);
 
-var iNovelistControllers = angular.module('iNovelistControllers', []);
-
-
-iNovelistControllers.controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
-
-}]);
-
-iNovelistControllers.controller('MainMenuCtrl', function ($scope) {
-  $scope.menuItems = [
-    {
-      'title': 'Натяжные потолки',
-      'href': '#/stretchCeiling'
-    }
-  ];
-});
-
-iNovelistApp.config(['$routeProvider',
-  function($routeProvider) {
+iNovelistApp.config(['$routeProvider', '$locationProvider',
+  function($routeProvider, $locationProvider) {
     $routeProvider.
-      when('/main', {
-        templateUrl: 'blocks/main.html',
-        controller: 'MainCtrl'
+      when('/books', {
+        templateUrl: 'blocks/books.html',
+        controller: 'BooksCtrl'
+      }).
+      when('/books/:bookId', {
+        templateUrl: 'blocks/book.html',
+        controller: 'BookCtrl'
+      }).
+      when('/characters', {
+        templateUrl: 'blocks/characters.html',
+        controller: 'CharactersCtrl'
+      }).
+      when('/characters/:characterId', {
+        templateUrl: 'blocks/character.html',
+        controller: 'CharacterCtrl'
       }).
       otherwise({
-        redirectTo: '/main'
+        redirectTo: '/characters'
       });
+
+      //$locationProvider.html5Mode(true);
   }]);

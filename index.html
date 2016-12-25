@@ -10,8 +10,9 @@
         <script src="/js/inovelist.controllers.js"></script>
     </head>
     <body>
-        <div ng-controller="MainCtrl">
-            {{2+2}}
+        <div id="mainMenu" ng-controller="MainMenuCtrl">
+            <div ng-repeat="menuItem in menuItems" ng-click="go(menuItem.href)" class="main-menu-item">{{ menuItem.title }}</div>
         </div>
+        <div id="workspace" ng-view></div>
     </body>
 </html>
