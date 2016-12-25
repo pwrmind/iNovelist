@@ -14,6 +14,10 @@ iNovelistApp.config(['$routeProvider', '$locationProvider',
         templateUrl: 'blocks/book.html',
         controller: 'BookCtrl'
       }).
+      when('/chapters', {
+        templateUrl: 'blocks/chapters.html',
+        controller: 'ChaptersCtrl'
+      }).
       when('/characters', {
         templateUrl: 'blocks/characters.html',
         controller: 'CharactersCtrl'
@@ -21,6 +25,10 @@ iNovelistApp.config(['$routeProvider', '$locationProvider',
       when('/characters/:characterId', {
         templateUrl: 'blocks/character.html',
         controller: 'CharacterCtrl'
+      }).
+      when('/places', {
+        templateUrl: 'blocks/places.html',
+        controller: 'PlacesCtrl'
       }).
       otherwise({
         redirectTo: '/characters'

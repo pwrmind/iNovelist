@@ -26,7 +26,7 @@ html, body {
     margin-left: 84px;
 }
 
-.character, .book {
+.character, .book, .place, .scene {
     width: 80px;
     height: 80px;
     background-color: goldenrod;
@@ -36,7 +36,7 @@ html, body {
     float: left;
 }
 
-.character-list, .book-list {
+.character-list, .book-list, .places-list, .scenes-list {
     width: calc(100% - 84px);
     height: 80px;
 }

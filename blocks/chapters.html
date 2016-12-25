@@ -1,0 +1,15 @@
+<div><h2>Главы (Chapters)</h2></div>
+<div ng-repeat="chapter in chapters">
+    <div><h4>{{ chapter.name }}:</h4></div>
+    <div class="scenes-list">
+        <div class="scene" ng-repeat="scene in chapter.scenes" ng-click="selectScene(scene)">{{ scene.name }}</div>
+        <div class="scene">Добавить</div>
+    </div>
+</div>
+<hr>
+<div ng-show="true">
+    <div><h4>{{ selectedScene.name }}:</h4></div>
+    <div>
+        <textarea name="scene" id="" style="width: 100%" rows="10" ng-model="selectedScene.text"></textarea>
+    </div>
+</div>
