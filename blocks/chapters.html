@@ -3,7 +3,7 @@
     <div><h4>{{ chapter.name }}:</h4></div>
     <div class="scenes-list">
         <div class="scene" ng-repeat="scene in chapter.scenes" ng-click="selectScene(scene)">{{ scene.name }}</div>
-        <div class="scene">Добавить</div>
+        <div class="scene" ng-click="addScene(chapter)">Добавить</div>
     </div>
 </div>
 <hr>
