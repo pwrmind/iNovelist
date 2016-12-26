@@ -108,11 +108,6 @@ if(localStorage["model"]) {
         icon: ""
       },
       {
-        title: "Предпросмотр",
-        href: "#!/preview",
-        icon: ""
-      },
-      {
         title: "Персонажи",
         href: "#!/characters",
         icon: "./images/characters_128x128_.png"
@@ -121,6 +116,11 @@ if(localStorage["model"]) {
         title: "Места (Places)",
         href: "#!/places",
         icon: "./images/places_128x128.png"
+      },
+      {
+        title: "Предпросмотр",
+        href: "#!/preview",
+        icon: ""
       }
     ]
   };
@@ -143,7 +143,14 @@ iNovelistControllers.controller('BooksCtrl', ['$scope', '$http', '$routeParams',
       title: "second book",
       characters: [],
       places: [],
-      chapters: []
+      chapters: [
+        {
+          id: 0,
+          name: "Новая глава",
+          description: "Новая глава",
+          scenes: []
+        }
+      ]
     };
     MODEL.books.push(newBook);
     $scope.selectedBook = MODEL.currentBook = newBook;
@@ -167,6 +174,16 @@ iNovelistControllers.controller('ChaptersCtrl', ['$scope', '$http', '$routeParam
 
     $scope.selectScene = function(scene) {
       $scope.selectedScene = scene;
+    };
+
+    $scope.addChapter = function() {
+      var newChapter = {
+        id: 0,
+        name: "Новая глава",
+        description: "Новая глава",
+        scenes: []
+      };
+      MODEL.currentBook.chapters.push(newChapter);
     };
 
     $scope.addScene = function(chapter) {

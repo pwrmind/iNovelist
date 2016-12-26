@@ -10,6 +10,7 @@
         <script src="./js/inovelist.controllers.js"></script>
     </head>
     <body>
+        <div ng-bind="MODEL.currentBook.title">{{2+2}}</div>
         <div id="mainMenu" ng-controller="MainMenuCtrl">
             <div ng-repeat="menuItem in menuItems" ng-click="go(menuItem.href)" class="main-menu-item">
                 <div class="main-menu-item-title">{{ menuItem.title }}</div>
