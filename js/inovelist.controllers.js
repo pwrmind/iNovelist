@@ -17,7 +17,8 @@ var MODEL = {
           alias: "",
           age: 30, 
           gender: "мужской",
-          hometown: ""
+          hometown: "",
+          type: "protagonist"
         },
         {
           id: 1,
@@ -26,7 +27,8 @@ var MODEL = {
           alias: "",
           age: 30, 
           gender: "женский",
-          hometown: ""
+          hometown: "",
+          type: "protagonist"
         },
         {
           id: 1,
@@ -35,7 +37,8 @@ var MODEL = {
           alias: "Большой Боб",
           age: 40, 
           gender: "мужской",
-          hometown: ""
+          hometown: "",
+          type: "secondary"
         }
       ],
       chapters: [
@@ -192,7 +195,7 @@ iNovelistControllers.controller('CharactersCtrl', ['$scope', '$http', '$routePar
     $scope.selectedCharacter = character;
   };
 
-  $scope.addCharacter = function() {
+  $scope.addCharacter = function(type) {
       var newCharacter = {
         id: 0,
         firstName: "Имя",
@@ -200,10 +203,11 @@ iNovelistControllers.controller('CharactersCtrl', ['$scope', '$http', '$routePar
         alias: "Псевдоним",
         age: 0, 
         gender: "пол",
-        hometown: "родной город"
+        hometown: "родной город",
+        type: type
       };
       $scope.characters.push(newCharacter);
-      $scope.selectedScene = newCharacter;
+      $scope.selectedCharacter = newCharacter;
     };
 }]);
 
