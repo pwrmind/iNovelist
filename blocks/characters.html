@@ -3,14 +3,14 @@
     <div><h4>Главные персонажи (Main characters):</h4></div>
     <div class="character-list">
         <div class="character" ng-repeat="character in characters | filter:{type:'protagonist'}" ng-click="selectCharacter(character)">{{ character.firstName }}</div>
-        <div class="character" ng-click="addCharacter('protagonist')">Добавить</div>
+        <div class="character" ng-click="addCharacter('protagonist')">Добавить (Add)</div>
     </div>
 </div>
 <div>
     <div><h4>Второстепенные персонажи (Secondary characters):</h4></div>
     <div class="character-list">
         <div class="character" ng-repeat="character in characters | filter:{type:'secondary'}" ng-click="selectCharacter(character)">{{ character.firstName }}</div>
-        <div class="character" ng-click="addCharacter('secondary')">Добавить</div>
+        <div class="character" ng-click="addCharacter('secondary')">Добавить (Add)</div>
     </div>
 </div>
 <hr>
