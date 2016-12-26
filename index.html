@@ -11,7 +11,10 @@
     </head>
     <body>
         <div id="mainMenu" ng-controller="MainMenuCtrl">
-            <div ng-repeat="menuItem in menuItems" ng-click="go(menuItem.href)" class="main-menu-item">{{ menuItem.title }}</div>
+            <div ng-repeat="menuItem in menuItems" ng-click="go(menuItem.href)" class="main-menu-item">
+                <!--<img ng-src="{{menuItem.icon}}">-->
+                <div class="main-menu-item-title">{{ menuItem.title }}</div>
+            </div>
         </div>
         <div id="workspace" ng-view></div>
     </body>

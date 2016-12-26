@@ -3,7 +3,7 @@
     <div><h4>Список мест (Lists of places):</h4></div>
     <div class="places-list">
         <div class="place" ng-repeat="place in places" ng-click="selectPlace(place)">{{ place.name }}</div>
-        <div class="place">Добавить</div>
+        <div class="place" ng-click="addPlace()">Добавить</div>
     </div>
 </div>
 <hr>
