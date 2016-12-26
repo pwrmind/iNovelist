@@ -39,7 +39,7 @@ html, body {
     margin-left: 84px;
 }
 
-.character, .book, .place, .scene {
+.character, .book, .place, .chapter, .scene {
     width: 80px;
     height: 80px;
     background-color: goldenrod;
@@ -49,7 +49,10 @@ html, body {
     float: left;
 }
 
-.character-list, .book-list, .places-list, .scenes-list {
+.character-list, .book-list, .places-list, .chapters-list, .scenes-list {
     width: calc(100% - 84px);
     height: 80px;
+    display: block;
+    clear: left;
+    margin-bottom: 4px;
 }
