@@ -1,0 +1,16 @@
+<div><h2>Книги (Books)</h2></div>
+<div>
+    <div><h4>Мои книги (My books):</h4></div>
+    <div class="book-list">
+        <div ng-repeat="book in books" class="book" ng-click="selectBook(book)">{{ book.title }}</div>
+        <div class="book" ng-click="addBook()">Добавить</div>
+    </div>
+</div>
+<div>
+    <div><h4>Книги других авторов (Other books):</h4></div>
+    <div class="book-list">
+        <div ng-repeat="book in books" class="book">{{ book.title }}</div>
+        <div class="book">Добавить</div>
+    </div>
+</div>
+<hr>

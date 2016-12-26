@@ -1,0 +1,55 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+    /*overflow: hidden;*/
+    /*height: 100%;*/
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+#mainMenu {
+    width: 80px;
+    height: 100vh;
+    position: absolute;
+    background-color: darkgoldenrod;
+}
+
+.main-menu-item {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 4px;
+    background-color: goldenrod;
+    cursor: pointer;
+    position: relative;
+}
+
+.main-menu-item > img {
+    width: 100%;
+    height: 100%;
+    filter: grayscale(100%);
+}
+
+.main-menu-item-title {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#workspace {
+    margin-left: 84px;
+}
+
+.character, .book, .place, .scene {
+    width: 80px;
+    height: 80px;
+    background-color: goldenrod;
+    /*display: inline-block;*/
+    margin-right: 4px;
+    cursor: pointer;
+    float: left;
+}
+
+.character-list, .book-list, .places-list, .scenes-list {
+    width: calc(100% - 84px);
+    height: 80px;
+}
