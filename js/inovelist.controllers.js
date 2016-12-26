@@ -171,9 +171,14 @@ iNovelistControllers.controller('ChaptersCtrl', ['$scope', '$http', '$routeParam
     $scope.chapters = MODEL.currentBook.chapters;
 
     $scope.selectedScene = {};
+    $scope.selectedChapter = {};
 
     $scope.selectScene = function(scene) {
       $scope.selectedScene = scene;
+    };
+
+    $scope.selectChapter = function(chapter) {
+      $scope.selectedChapter = chapter;
     };
 
     $scope.addChapter = function() {
@@ -186,13 +191,13 @@ iNovelistControllers.controller('ChaptersCtrl', ['$scope', '$http', '$routeParam
       MODEL.currentBook.chapters.push(newChapter);
     };
 
-    $scope.addScene = function(chapter) {
+    $scope.addScene = function() {
       var newScene = {
         id: 0,
         name: "Новая сцена",
         text: ""
       };
-      chapter.scenes.push(newScene);
+      $scope.selectedChapter.scenes.push(newScene);
       $scope.selectedScene = newScene;
     };
 }]);

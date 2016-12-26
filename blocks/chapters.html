@@ -1,10 +1,11 @@
 <div><h2>Главы (Chapters)</h2></div>
-<div ng-repeat="chapter in chapters">
-    <div><h4>{{ chapter.name }}:</h4></div>
-    <div class="scenes-list">
-        <div class="scene" ng-repeat="scene in chapter.scenes" ng-click="selectScene(scene)">{{ scene.name }}</div>
-        <div class="scene" ng-click="addScene(chapter)">Добавить</div>
-    </div>
+<div class="chapters-list">
+    <div class="chapter" ng-repeat="chapter in chapters" ng-click="selectChapter(chapter)">{{ chapter.name }}</div>
+    <div class="chapter" ng-click="addChapter()">Добавить</div>
+</div>
+<div class="scenes-list">
+    <div class="scene" ng-repeat="scene in selectedChapter.scenes" ng-click="selectScene(scene)">{{ scene.name }}</div>
+    <div class="scene" ng-click="addScene(chapter)">Добавить</div>
 </div>
 <hr>
 <div ng-show="true">
