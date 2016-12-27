@@ -102,6 +102,7 @@ textarea {
     border-radius: 4px;
     padding: 4px;
     font-size: 12px;
+    position: relative;
 }
 
 .character, .book, .place, .chapter {
@@ -130,6 +131,17 @@ textarea {
     display: block;
     clear: left;
     margin-bottom: 4px;
+    overflow: hidden;
+}
+
+.chapter-button-delete, .scene-button-delete {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 16px;
+    height: 16px;
+    background-color: red;
+    border-radius: 0px 0px 0px 4px;
 }
 
 .preview-scane {

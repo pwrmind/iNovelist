@@ -179,6 +179,14 @@ iNovelistControllers.controller('ChaptersCtrl', ['$scope', '$http', '$routeParam
       $scope.selectedScene = MODEL.currentScene = scene;
     };
 
+    $scope.deleteScene = function(sceneIndex) {
+      $scope.selectedChapter.scenes.splice(sceneIndex, 1);   
+    };
+
+    $scope.deleteChapter = function(chapterIndex) {
+      MODEL.currentBook.chapters.splice(chapterIndex, 1);   
+    };
+
     $scope.selectChapter = function(chapter) {
       $scope.selectedChapter = MODEL.currentChapter = chapter;
     };
