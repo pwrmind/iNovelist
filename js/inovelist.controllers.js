@@ -246,7 +246,7 @@ iNovelistControllers.controller('CharactersCtrl', ['$scope', '$http', '$routePar
     };
 }]);
 
-iNovelistControllers.controller('CharacterCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
+iNovelistControllers.controller('CharacterCtrl', ['$scope', '$http', '$routeParams', '$location', function ($scope, $http, $routeParams,$location) {
     $scope.params = $routeParams;
 }]);
 
@@ -255,4 +255,8 @@ iNovelistControllers.controller('MainMenuCtrl', function ($scope) {
   $scope.go = function ( href ) {
     location.hash = href;
   };
+
+  $scope.getClass = function (path) {
+    //return ($location.path().substr(0, path.length) === path) ? 'active' : '';
+  }
 });

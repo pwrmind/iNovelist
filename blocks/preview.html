@@ -1,5 +1,6 @@
 <div><h2>Просмотр (Preview)</h2></div>
 <div ng-repeat="chapter in chapters">
-    <h4>{{ chapter.name }}:</h4>
-    <p ng-repeat="scene in chapter.scenes">{{ scene.text }}</p>
+    <h4 name="chapter.name">{{ chapter.name }}</h4>
+    <pre class="preview-scane" ng-repeat="scene in chapter.scenes">{{ scene.text }}<span>{{scene.name}}</span></pre>
+    
 </div>
