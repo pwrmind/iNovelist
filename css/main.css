@@ -103,6 +103,13 @@ textarea {
     padding: 4px;
     font-size: 12px;
     position: relative;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
 }
 
 .character, .book, .place, .chapter {
@@ -134,7 +141,7 @@ textarea {
     overflow: hidden;
 }
 
-.chapter-button-delete, .scene-button-delete {
+.book-button-delete, .chapter-button-delete, .scene-button-delete, .character-button-delete, .place-button-delete {
     position: absolute;
     top: 0px;
     right: 0px;
@@ -160,7 +167,7 @@ textarea {
 }
 
 .preview-scane:hover {
-    background-color: rgba(245, 245, 245, 0.5);;
+    background-color: rgba(245, 245, 245, 0.5);
 }
 
 .preview-scane:hover > span {

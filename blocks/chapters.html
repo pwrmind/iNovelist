@@ -1,4 +1,5 @@
 <script>
+  /*
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -6,12 +7,13 @@
 
   ga('create', 'UA-76142839-2', 'auto');
   ga('send', 'pageview');
+  */
 </script>
 <div><h2>Содержание (Сontents)</h2></div>
 <div>
     <div><h4>Главы (Chapters):</h4></div>
     <div class="chapters-list">
-        <div class="chapter" ng-repeat="chapter in chapters" ng-click="selectChapter(chapter)">
+        <div class="chapter" ng-repeat="chapter in chapters track by $index" ng-click="selectChapter(chapter)">
             <div class="chapter-button-delete" ng-click="deleteChapter($index)"></div>
             {{ chapter.name }}
         </div>
@@ -21,7 +23,7 @@
 <dev>
     <div><h4>Сцены (Scenes):</h4></div>
     <div class="scenes-list">
-        <div class="scene" ng-repeat="scene in selectedChapter.scenes" ng-click="selectScene(scene)">
+        <div class="scene" ng-repeat="scene in selectedChapter.scenes track by $index" ng-click="selectScene(scene)">
             <div class="scene-button-delete" ng-click="deleteScene($index)"></div>
            {{ scene.name }}
         </div>

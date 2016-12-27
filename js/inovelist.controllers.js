@@ -1,5 +1,6 @@
-delete localStorage["chapters"];
-window.addEventListener("beforeunload", function(){
+//delete localStorage["model"];
+window.addEventListener("beforeunload", function() {
+  delete localStorage["model"];
   localStorage["model"] = JSON.stringify(MODEL || {});
 });
 
@@ -157,6 +158,10 @@ iNovelistControllers.controller('BooksCtrl', ['$scope', '$http', '$routeParams',
     MODEL.books.push(newBook);
     $scope.selectedBook = MODEL.currentBook = newBook;
   };
+
+  $scope.deleteBook = function(bookIndex) {
+    MODEL.books.splice(bookIndex, 1);   
+  };
 }]);
 
 iNovelistControllers.controller('BookCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
@@ -230,6 +235,10 @@ iNovelistControllers.controller('PlacesCtrl', ['$scope', '$http', '$routeParams'
       $scope.places.push(newPlace);
       $scope.selectedPlace = newPlace;
     };
+
+    $scope.deletePlace = function(placeIndex) {
+      $scope.places.splice(placeIndex, 1);
+    };
 }]);
 
 iNovelistControllers.controller('CharactersCtrl', ['$scope', '$http', '$routeParams', function ($scope, $http, $routeParams) {
@@ -241,19 +250,24 @@ iNovelistControllers.controller('CharactersCtrl', ['$scope', '$http', '$routePar
   };
 
   $scope.addCharacter = function(type) {
-      var newCharacter = {
-        id: 0,
-        firstName: "Имя",
-        lastName: "Фамилия",
-        alias: "Псевдоним",
-        age: 0, 
-        gender: "пол",
-        hometown: "родной город",
-        type: type
-      };
-      $scope.characters.push(newCharacter);
-      $scope.selectedCharacter = newCharacter;
+    var newCharacter = {
+      id: 0,
+      firstName: "Имя",
+      lastName: "Фамилия",
+      alias: "Псевдоним",
+      age: 0, 
+      gender: "пол",
+      hometown: "родной город",
+      type: type
     };
+    $scope.characters.push(newCharacter);
+    $scope.selectedCharacter = newCharacter;
+  };
+
+  $scope.deleteCharacter = function(character) {
+    //var characterIndex = MODEL.currentBook.chapters.indexOf(character);
+    //MODEL.books.splice(characterIndex, 1);   
+  };
 }]);
 
 iNovelistControllers.controller('CharacterCtrl', ['$scope', '$http', '$routeParams', '$location', function ($scope, $http, $routeParams,$location) {

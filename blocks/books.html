@@ -1,4 +1,5 @@
 <script>
+  /*
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -6,13 +7,16 @@
 
   ga('create', 'UA-76142839-2', 'auto');
   ga('send', 'pageview');
-
+  */
 </script>
 <div><h2>Книги (Books)</h2></div>
 <div>
     <div><h4>Мои книги (My books):</h4></div>
     <div class="book-list">
-        <div ng-repeat="book in books" class="book" ng-click="selectBook(book)">{{ book.title }}</div>
+        <div ng-repeat="book in books track by $index" class="book" ng-click="selectBook(book)">
+            <div class="book-button-delete" ng-click="deleteBook($index)"></div>
+            {{ book.title }}
+        </div>
         <div class="book" ng-click="addBook()">Добавить</div>
     </div>
 </div>
