@@ -139,7 +139,7 @@ textarea {
 .preview-scane > span {
     position: absolute;
     display: none;
-    right: 0px;
+    right: -100px;
     top: 0px;
     background-color: #fcffcc;
     border-radius: 4px 0px 0px 4px;
