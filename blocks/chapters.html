@@ -6,21 +6,26 @@
 
   ga('create', 'UA-76142839-2', 'auto');
   ga('send', 'pageview');
-
 </script>
 <div><h2>Содержание (Сontents)</h2></div>
 <div>
     <div><h4>Главы (Chapters):</h4></div>
     <div class="chapters-list">
-        <div class="chapter" ng-repeat="chapter in chapters" ng-click="selectChapter(chapter)">{{ chapter.name }}</div>
+        <div class="chapter" ng-repeat="chapter in chapters" ng-click="selectChapter(chapter)">
+            <div class="chapter-button-delete" ng-click="deleteChapter($index)"></div>
+            {{ chapter.name }}
+        </div>
         <div class="chapter" ng-click="addChapter()">Добавить</div>
     </div>
 </div>
 <dev>
     <div><h4>Сцены (Scenes):</h4></div>
     <div class="scenes-list">
-        <div class="scene" ng-repeat="scene in selectedChapter.scenes" ng-click="selectScene(scene)">{{ scene.name }}</div>
-        <div class="scene" ng-click="addScene(chapter)">Добавить</div>
+        <div class="scene" ng-repeat="scene in selectedChapter.scenes" ng-click="selectScene(scene)">
+            <div class="scene-button-delete" ng-click="deleteScene($index)"></div>
+           {{ scene.name }}
+        </div>
+        <div class="scene" ng-click="addScene()">Добавить</div>
     </div>
 </dev>
 
