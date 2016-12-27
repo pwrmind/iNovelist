@@ -7,20 +7,50 @@ html, body {
     overflow: hidden;
 }
 
+h1, h2, h3, h4 {
+    /*text-shadow: 0px 0px 1px #015401;*/
+}
+
+pre {
+    white-space: pre-line;
+    font-family: sans-serif;
+}
+
 #mainMenu {
     width: 80px;
     height: 100vh;
     position: absolute;
-    background-color: darkgoldenrod;
+    background-color: #328628;
+    border-right: 1px solid #015401;
+}
+
+#mainMenu::after {
+    content: "";
+    width: 4px;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 81px;
+    display: block;
+    z-index: 100;
+    background: -webkit-linear-gradient(left, rgba(0,0,0,0.4), rgba(0,0,0,0.0));
 }
 
 .main-menu-item {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 4px;
-    background-color: goldenrod;
+    width: 62px;
+    height: 62px;
+    margin: 4px;
+    background-color: #327b29;
     cursor: pointer;
     position: relative;
+    border: 1px solid rgba(200, 200, 200, 0.5);
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.main-menu-item:hover {
+    background-color: #25611e;
+    border: 1px solid rgba(240, 240, 240, 0.8);
 }
 
 .main-menu-item > img {
@@ -30,23 +60,68 @@ html, body {
 }
 
 .main-menu-item-title {
-    position: absolute;
+    /*position: absolute;
     top: 0px;
-    left: 0px;
+    left: 0px;*/
+    text-shadow: 0px 0px 1px #015401;
+    color: whitesmoke;
+    font-size: 12px;
 }
 
 #workspace {
-    margin-left: 84px;
+    margin-left: 100px;
+    padding-right: 100px;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.input-h4 {
+    font-size: 1em;
+    -webkit-margin-before: 1.33em;
+    -webkit-margin-after: 1.33em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+    border: none;
+    width: 400px;
+    font-family: sans-serif;
+}
+
+textarea {
+    font-size: 16px;
 }
 
 .character, .book, .place, .chapter, .scene {
-    width: 80px;
-    height: 80px;
-    background-color: goldenrod;
+    width: 70px;
+    height: 70px;
+    /*background-color: goldenrod;*/
     /*display: inline-block;*/
     margin-right: 4px;
     cursor: pointer;
     float: left;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 12px;
+}
+
+.character, .book, .place, .chapter {
+    background-color: #327b29;
+    border: 1px solid #015401;
+    text-shadow: 0px 0px 1px #015401;
+    color: whitesmoke;
+    box-shadow:  inset 0px 0px 2px #015401;
+} 
+
+.chapter:hover {
+    background-color: #25611e;
+    border: 1px solid rgba(240, 240, 240, 0.8);
+    box-shadow: inset 0px 0px 2px #015401;
+}
+
+.scene {
+    background-color: gold;
+    border: 1px solid goldenrod;
+    box-shadow: inset 0px 0px 2px #483300;
 }
 
 .character-list, .book-list, .places-list, .chapters-list, .scenes-list {
@@ -55,4 +130,27 @@ html, body {
     display: block;
     clear: left;
     margin-bottom: 4px;
+}
+
+.preview-scane {
+    position: relative;
+}
+
+.preview-scane > span {
+    position: absolute;
+    display: none;
+    right: 0px;
+    top: 0px;
+    background-color: #fcffcc;
+    border-radius: 4px 0px 0px 4px;
+    padding: 4px;
+    box-shadow: 0px 0px 2px black;
+}
+
+.preview-scane:hover {
+    background-color: rgba(245, 245, 245, 0.5);;
+}
+
+.preview-scane:hover > span {
+    display: inline-block;
 }

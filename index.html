@@ -12,7 +12,7 @@
     <body>
         <div id="mainMenu" ng-controller="MainMenuCtrl">
             <div ng-repeat="menuItem in menuItems" ng-click="go(menuItem.href)" class="main-menu-item">
-                <div class="main-menu-item-title">{{ menuItem.title }}</div>
+                <div ng-class="getClass('/tasks')" class="main-menu-item-title">{{ menuItem.title }}</div>
             </div>
         </div>
         <div id="workspace" ng-view></div>
