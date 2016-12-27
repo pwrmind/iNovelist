@@ -10,6 +10,8 @@ if(localStorage["model"]) {
 } else {
   MODEL = {
     currentBook: {},
+    currentChapter: {},
+    currentScene: {},
     books: [
       {
         id: 0,
@@ -170,15 +172,15 @@ iNovelistControllers.controller('ChaptersCtrl', ['$scope', '$http', '$routeParam
     $scope.params = $routeParams;
     $scope.chapters = MODEL.currentBook.chapters;
 
-    $scope.selectedScene = {};
-    $scope.selectedChapter = {};
+    $scope.selectedScene = MODEL.currentScene || {};
+    $scope.selectedChapter = MODEL.currentChapter || {};
 
     $scope.selectScene = function(scene) {
-      $scope.selectedScene = scene;
+      $scope.selectedScene = MODEL.currentScene = scene;
     };
 
     $scope.selectChapter = function(chapter) {
-      $scope.selectedChapter = chapter;
+      $scope.selectedChapter = MODEL.currentChapter = chapter;
     };
 
     $scope.addChapter = function() {
@@ -198,7 +200,7 @@ iNovelistControllers.controller('ChaptersCtrl', ['$scope', '$http', '$routeParam
         text: ""
       };
       $scope.selectedChapter.scenes.push(newScene);
-      $scope.selectedScene = newScene;
+      $scope.selectedScene = MODEL.currentScene = newScene;
     };
 }]);
 
