@@ -1,20 +1,1081 @@
 <!DOCTYPE html>
-<html lang="ru" ng-app="iNovelistApp">  
-    <head>
-        <title>iNovelist</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="./css/main.css">
-        <script src="./js/angular.min.js"></script>
-        <script src="./js/angular-route.min.js"></script>
-        <script src="./js/inovelist.app.js"></script>
-        <script src="./js/inovelist.controllers.js"></script>
-    </head>
-    <body>
-        <div id="mainMenu" ng-controller="MainMenuCtrl">
-            <div ng-repeat="menuItem in menuItems" ng-click="go(menuItem.href)" class="main-menu-item">
-                <div class="main-menu-item-title">{{ menuItem.title }}</div>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovelCraft - Приложение для писателей</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@4/marked.min.js"></script>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #818cf8;
+            --primary-dark: #3730a3;
+            --secondary: #6B7280;
+            --accent: #10B981;
+            --background: #F9FAFB;
+            --card: #FFFFFF;
+            --text: #1F2937;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        
+        #app {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .main-container {
+            display: flex;
+            flex: 1;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: var(--card);
+            border-right: 1px solid #E5E7EB;
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            padding: 1rem 0;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.2s;
+            gap: 0.75rem;
+        }
+        
+        .menu-item:hover {
+            background-color: #F3F4F6;
+        }
+        
+        .menu-item.active {
+            background-color: var(--primary-light);
+            color: white;
+        }
+        
+        .menu-item i {
+            width: 24px;
+            text-align: center;
+        }
+        
+        .card {
+            background-color: var(--card);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-sm {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.375rem;
+            background-color: white;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        
+        .grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        
+        .grid-cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        
+        .mention {
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .list-item {
+            padding: 0.75rem;
+            border-bottom: 1px solid #E5E7EB;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .list-item:hover {
+            background-color: #F9FAFB;
+        }
+        
+        .list-item.active {
+            background-color: #EDE9FE;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .editor-container {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .scene-editor {
+            min-height: 200px;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.375rem;
+            padding: 1rem;
+            background-color: white;
+        }
+        
+        .preview-content {
+            line-height: 1.6;
+        }
+        
+        .preview-content h2 {
+            margin: 1.5rem 0 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .preview-content h3 {
+            margin: 1rem 0 0.75rem;
+            color: var(--primary);
+        }
+        
+        .preview-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--secondary);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #D1D5DB;
+        }
+        
+        .character-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .character-badge.protagonist {
+            background-color: #DBEAFE;
+            color: var(--primary-dark);
+        }
+        
+        .character-badge.secondary {
+            background-color: #E5E7EB;
+            color: var(--text);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                z-index: 100;
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .grid-cols-2, .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .editor-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-book"></i>
+                <span>NovelCraft</span>
             </div>
+            <button class="mobile-menu-btn" @click="toggleSidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+        </header>
+        
+        <div class="main-container">
+            <aside class="sidebar" :class="{ open: sidebarOpen }">
+                <a v-for="item in menuItems" 
+                   :key="item.title"
+                   class="menu-item" 
+                   :class="{ active: currentRoute === item.href }"
+                   @click="navigate(item.href)">
+                    <i :class="item.icon"></i>
+                    <span>{{ item.title }}</span>
+                </a>
+            </aside>
+            
+            <main class="content">
+                <!-- Книги -->
+                <div v-if="currentRoute === '#!/books'">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Мои книги</h2>
+                            <button class="btn btn-primary" @click="addBook">
+                                <i class="fas fa-plus"></i> Новая книга
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div v-for="book in books" 
+                                 :key="book.id"
+                                 class="card cursor-pointer border-2 transition-all"
+                                 :class="{ 'border-primary': currentBook.id === book.id }"
+                                 @click="selectBook(book)">
+                                <h3 class="font-bold text-lg mb-2">{{ book.title }}</h3>
+                                <div class="text-sm text-gray-600">
+                                    <p><i class="fas fa-user mr-2"></i>Персонажи: {{ book.characters.length }}</p>
+                                    <p><i class="fas fa-map-marker-alt mr-2"></i>Места: {{ book.places.length }}</p>
+                                    <p><i class="fas fa-bookmark mr-2"></i>Главы: {{ book.chapters.length }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Главы -->
+                <div v-if="currentRoute === '#!/chapters'">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Главы книги: {{ currentBook.title }}</h2>
+                            <button class="btn btn-primary" @click="addChapter">
+                                <i class="fas fa-plus"></i> Добавить главу
+                            </button>
+                        </div>
+                        
+                        <div class="editor-container grid grid-cols-1 lg:grid-cols-3">
+                            <div class="lg:col-span-1">
+                                <div v-for="(chapter, index) in currentBook.chapters" 
+                                     :key="chapter.id"
+                                     class="list-item"
+                                     :class="{ active: selectedChapter?.id === chapter.id }"
+                                     @click="selectChapter(chapter)">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="font-medium">Глава {{ index + 1 }}: {{ chapter.name }}</h3>
+                                        <span class="text-sm bg-gray-100 px-2 py-1 rounded-full">
+                                            {{ chapter.scenes.length }} сцен
+                                        </span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mt-1">{{ chapter.description }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="lg:col-span-2" v-if="selectedChapter">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Редактирование главы: {{ selectedChapter.name }}</h3>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Название главы</label>
+                                        <input type="text" v-model="selectedChapter.name">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Описание</label>
+                                        <textarea v-model="selectedChapter.description" rows="3"></textarea>
+                                    </div>
+                                    
+                                    <div class="mt-4">
+                                        <div class="flex justify-between items-center mb-3">
+                                            <h4 class="font-medium">Сцены</h4>
+                                            <button class="btn btn-accent btn-sm" @click="addScene(selectedChapter)">
+                                                <i class="fas fa-plus"></i> Добавить сцену
+                                            </button>
+                                        </div>
+                                        
+                                        <div v-for="(scene, index) in selectedChapter.scenes" 
+                                             :key="scene.id"
+                                             class="scene-editor mb-4"
+                                             :class="{ 'border-2 border-primary': selectedScene?.id === scene.id }">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <h5 class="font-medium">Сцена {{ index + 1 }}: {{ scene.name }}</h5>
+                                                <button class="text-red-500 hover:text-red-700" @click="removeScene(selectedChapter, scene)">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="form-group mb-2">
+                                                <input type="text" v-model="scene.name" placeholder="Название сцены">
+                                            </div>
+                                            
+                                            <textarea v-model="scene.text" 
+                                                      @input="processMentions(scene)"
+                                                      placeholder="Текст сцены..." 
+                                                      rows="5"
+                                                      class="w-full"></textarea>
+                                            
+                                            <div class="mt-2 text-sm text-gray-600" v-if="scene.mentions && scene.mentions.length">
+                                                Упоминания: 
+                                                <span v-for="mention in scene.mentions" :key="mention.position" class="mention ml-1">
+                                                    @{{ mention.name }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div v-else class="lg:col-span-2">
+                                <div class="empty-state">
+                                    <i class="fas fa-book-open"></i>
+                                    <h3 class="text-xl font-medium mb-2">Выберите главу</h3>
+                                    <p class="text-gray-600">Выберите главу из списка слева для редактирования</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Персонажи -->
+                <div v-if="currentRoute === '#!/characters'">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Персонажи книги: {{ currentBook.title }}</h2>
+                            <div class="flex gap-2">
+                                <button class="btn btn-accent" @click="addCharacter('protagonist')">
+                                    <i class="fas fa-plus"></i> Главный герой
+                                </button>
+                                <button class="btn btn-secondary" @click="addCharacter('secondary')">
+                                    <i class="fas fa-plus"></i> Второстепенный
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="editor-container grid grid-cols-1 lg:grid-cols-3">
+                            <div class="lg:col-span-1">
+                                <div v-for="character in currentBook.characters" 
+                                     :key="character.id"
+                                     class="list-item"
+                                     :class="{ active: selectedCharacter?.id === character.id }"
+                                     @click="selectCharacter(character)">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="font-medium">{{ character.firstName }} {{ character.lastName }}</h3>
+                                        <span :class="['character-badge', character.type]">
+                                            {{ character.type === 'protagonist' ? 'Главный' : 'Второстепенный' }}
+                                        </span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mt-1" v-if="character.alias">Псевдоним: {{ character.alias }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="lg:col-span-2" v-if="selectedCharacter">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Редактирование персонажа</h3>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="form-group">
+                                            <label>Имя</label>
+                                            <input type="text" v-model="selectedCharacter.firstName">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Фамилия</label>
+                                            <input type="text" v-model="selectedCharacter.lastName">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Псевдоним</label>
+                                            <input type="text" v-model="selectedCharacter.alias">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Возраст</label>
+                                            <input type="number" v-model="selectedCharacter.age">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Пол</label>
+                                            <select v-model="selectedCharacter.gender">
+                                                <option value="мужской">Мужской</option>
+                                                <option value="женский">Женский</option>
+                                                <option value="другой">Другой</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Родной город</label>
+                                            <input type="text" v-model="selectedCharacter.hometown">
+                                        </div>
+                                        
+                                        <div class="form-group md:col-span-2">
+                                            <label>Описание</label>
+                                            <textarea v-model="selectedCharacter.description" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div v-else class="lg:col-span-2">
+                                <div class="empty-state">
+                                    <i class="fas fa-user"></i>
+                                    <h3 class="text-xl font-medium mb-2">Выберите персонажа</h3>
+                                    <p class="text-gray-600">Выберите персонажа из списка слева для редактирования</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Места -->
+                <div v-if="currentRoute === '#!/places'">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Места действия: {{ currentBook.title }}</h2>
+                            <button class="btn btn-primary" @click="addPlace">
+                                <i class="fas fa-plus"></i> Добавить место
+                            </button>
+                        </div>
+                        
+                        <div class="editor-container grid grid-cols-1 lg:grid-cols-3">
+                            <div class="lg:col-span-1">
+                                <div v-for="place in currentBook.places" 
+                                     :key="place.id"
+                                     class="list-item"
+                                     :class="{ active: selectedPlace?.id === place.id }"
+                                     @click="selectPlace(place)">
+                                    <h3 class="font-medium">{{ place.name }}</h3>
+                                    <p class="text-sm text-gray-600 mt-1">{{ place.description }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="lg:col-span-2" v-if="selectedPlace">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Редактирование места</h3>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="form-group">
+                                            <label>Название места</label>
+                                            <input type="text" v-model="selectedPlace.name">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Тип места</label>
+                                            <input type="text" v-model="selectedPlace.type" placeholder="Город, лес, здание и т.д.">
+                                        </div>
+                                        
+                                        <div class="form-group md:col-span-2">
+                                            <label>Описание</label>
+                                            <textarea v-model="selectedPlace.description" rows="3"></textarea>
+                                        </div>
+                                        
+                                        <div class="form-group md:col-span-2">
+                                            <label>Особенности</label>
+                                            <textarea v-model="selectedPlace.features" rows="2" placeholder="Важные детали, атмосфера и т.д."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div v-else class="lg:col-span-2">
+                                <div class="empty-state">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <h3 class="text-xl font-medium mb-2">Выберите место</h3>
+                                    <p class="text-gray-600">Выберите место из списка слева для редактирования</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Предпросмотр -->
+                <div v-if="currentRoute === '#!/preview'">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Предпросмотр книги: {{ currentBook.title }}</h2>
+                            <button class="btn btn-primary" @click="exportToMarkdown">
+                                <i class="fas fa-download"></i> Экспорт в Markdown
+                            </button>
+                        </div>
+                        
+                        <div class="preview-content">
+                            <div v-if="currentBook.chapters.length === 0" class="empty-state py-8">
+                                <i class="fas fa-book-open"></i>
+                                <h3 class="text-xl font-medium mb-2">Книга пуста</h3>
+                                <p class="text-gray-600">Добавьте главы и сцены для создания вашей книги</p>
+                            </div>
+                            
+                            <div v-for="chapter in currentBook.chapters" :key="chapter.id">
+                                <h2>Глава: {{ chapter.name }}</h2>
+                                <p class="text-gray-600 mb-4">{{ chapter.description }}</p>
+                                
+                                <div v-for="scene in chapter.scenes" :key="scene.id">
+                                    <h3>{{ scene.name }}</h3>
+                                    <div class="scene-content" v-html="renderSceneText(scene)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
-        <div id="workspace" ng-view></div>
-    </body>
+    </div>
+
+    <script>
+        const { createApp, ref, reactive, computed, watch } = Vue;
+        
+        createApp({
+            setup() {
+                // Навигационное меню
+                const menuItems = reactive([
+                    { title: "Книги", href: "#!/books", icon: "fas fa-book" },
+                    { title: "Главы", href: "#!/chapters", icon: "fas fa-bookmark" },
+                    { title: "Персонажи", href: "#!/characters", icon: "fas fa-user" },
+                    { title: "Места", href: "#!/places", icon: "fas fa-map-marker-alt" },
+                    { title: "Предпросмотр", href: "#!/preview", icon: "fas fa-eye" }
+                ]);
+                
+                // Текущий роут
+                const currentRoute = ref('#!/books');
+                
+                // Состояние бокового меню для мобильных устройств
+                const sidebarOpen = ref(false);
+                
+                // Загрузка модели из localStorage
+                const loadModel = () => {
+                    const savedModel = localStorage.getItem('novelcraft_model');
+                    if (savedModel) {
+                        return JSON.parse(savedModel);
+                    }
+                    
+                    // Начальные тестовые данные
+                    return {
+                        currentBookId: 0,
+                        books: [
+                            {
+                                id: 0,
+                                title: "Бойцовский клуб",
+                                characters: [
+                                    {
+                                        id: 0,
+                                        firstName: "Тайлер",
+                                        lastName: "Дёрден",
+                                        alias: "",
+                                        age: 30, 
+                                        gender: "мужской",
+                                        hometown: "",
+                                        type: "protagonist",
+                                        description: "Загадочный и харизматичный лидер подпольного бойцовского клуба."
+                                    },
+                                    {
+                                        id: 1,
+                                        firstName: "Марла",
+                                        lastName: "Зингер",
+                                        alias: "",
+                                        age: 30, 
+                                        gender: "женский",
+                                        hometown: "",
+                                        type: "protagonist",
+                                        description: "Циничная женщина, посещающая группы поддержки для больных."
+                                    },
+                                    {
+                                        id: 2,
+                                        firstName: "Роберт",
+                                        lastName: "Полсон",
+                                        alias: "Большой Боб",
+                                        age: 40, 
+                                        gender: "мужской",
+                                        hometown: "",
+                                        type: "secondary",
+                                        description: "Добродушный мужчина с гинекомастией, участник групп поддержки."
+                                    }
+                                ],
+                                chapters: [
+                                    {
+                                        id: 0,
+                                        name: "Глава 1",
+                                        description: "Знакомство с рассказчиком и его проблемами со сном.",
+                                        scenes: [
+                                            {
+                                                id: 0,
+                                                name: "Бессонница",
+                                                text: "Я не мог спать. И тогда я встретил @Марла на собрании для больных раком. Она выглядела так же потерянно, как и я.",
+                                                mentions: [
+                                                    { name: "Марла", type: "character", id: 1 }
+                                                ]
+                                            },
+                                            {
+                                                id: 1,
+                                                name: "Самолет",
+                                                text: "В самолете я познакомился с @Тайлером Дёрденом. Он продавал мыло и имел философию, которая перевернула мою жизнь.",
+                                                mentions: [
+                                                    { name: "Тайлер", type: "character", id: 0 }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        id: 1,
+                                        name: "Глава 2",
+                                        description: "Создание бойцовского клуба и его развитие.",
+                                        scenes: [
+                                            {
+                                                id: 0,
+                                                name: "Первая драка",
+                                                text: "Мы стояли на парковке бара. @Тайлер сказал: 'Я хочу, чтобы ты ударил меня изо всех сил'. Это было начало всего.",
+                                                mentions: [
+                                                    { name: "Тайлер", type: "character", id: 0 }
+                                                ]
+                                            },
+                                            {
+                                                id: 1,
+                                                name: "Подвальный клуб",
+                                                text: "Подвал бара 'Золотая лихорадка' стал нашим первым бойцовским клубом. @Большой Боб был одним из первых участников.",
+                                                mentions: [
+                                                    { name: "Большой Боб", type: "character", id: 2 }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                places: [
+                                    {
+                                        id: 0,
+                                        name: "Кондоминиум рассказчика",
+                                        type: "Квартира",
+                                        description: "Современная, безликая квартира с мебелью из каталога.",
+                                        features: "Безупречный порядок, ощущение пустоты и отчужденности."
+                                    },
+                                    {
+                                        id: 1,
+                                        name: "Подвал 'Золотая лихорадка'",
+                                        type: "Бар",
+                                        description: "Грязный подвал старого бара, где зародился бойцовский клуб.",
+                                        features: "Сырость, запах пива и пота, приглушенный свет."
+                                    }
+                                ]
+                            }
+                        ]
+                    };
+                };
+                
+                // Реактивная модель приложения
+                const model = reactive(loadModel());
+                
+                // Текущая книга
+                const currentBook = computed(() => {
+                    return model.books.find(book => book.id === model.currentBookId) || model.books[0];
+                });
+                
+                // Выбранные элементы для редактирования
+                const selectedChapter = ref(null);
+                const selectedScene = ref(null);
+                const selectedCharacter = ref(null);
+                const selectedPlace = ref(null);
+                
+                // Навигация
+                const navigate = (href) => {
+                    currentRoute.value = href;
+                    sidebarOpen.value = false;
+                    window.location.hash = href;
+                };
+                
+                // Переключение бокового меню (мобильная версия)
+                const toggleSidebar = () => {
+                    sidebarOpen.value = !sidebarOpen.value;
+                };
+                
+                // Выбор книги
+                const selectBook = (book) => {
+                    model.currentBookId = book.id;
+                    selectedChapter.value = null;
+                    selectedScene.value = null;
+                    selectedCharacter.value = null;
+                    selectedPlace.value = null;
+                    saveModel();
+                };
+                
+                // Добавление новой книги
+                const addBook = () => {
+                    const newId = Math.max(0, ...model.books.map(b => b.id)) + 1;
+                    const newBook = {
+                        id: newId,
+                        title: `Книга ${newId}`,
+                        characters: [],
+                        places: [],
+                        chapters: [
+                            {
+                                id: 0,
+                                name: "Глава 1",
+                                description: "Первая глава",
+                                scenes: [
+                                    {
+                                        id: 0,
+                                        name: "Сцена 1",
+                                        text: "",
+                                        mentions: []
+                                    }
+                                ]
+                            }
+                        ]
+                    };
+                    
+                    model.books.push(newBook);
+                    selectBook(newBook);
+                };
+                
+                // Выбор главы
+                const selectChapter = (chapter) => {
+                    selectedChapter.value = chapter;
+                    selectedScene.value = null;
+                };
+                
+                // Добавление новой главы
+                const addChapter = () => {
+                    const newId = Math.max(0, ...currentBook.value.chapters.map(c => c.id)) + 1;
+                    const newChapter = {
+                        id: newId,
+                        name: `Глава ${newId}`,
+                        description: "Описание главы",
+                        scenes: []
+                    };
+                    
+                    currentBook.value.chapters.push(newChapter);
+                    selectChapter(newChapter);
+                    saveModel();
+                };
+                
+                // Добавление новой сцены
+                const addScene = (chapter) => {
+                    const newId = Math.max(0, ...chapter.scenes.map(s => s.id)) + 1;
+                    const newScene = {
+                        id: newId,
+                        name: `Сцена ${newId}`,
+                        text: "",
+                        mentions: []
+                    };
+                    
+                    chapter.scenes.push(newScene);
+                    selectedScene.value = newScene;
+                    saveModel();
+                };
+                
+                // Удаление сцены
+                const removeScene = (chapter, scene) => {
+                    const index = chapter.scenes.findIndex(s => s.id === scene.id);
+                    if (index !== -1) {
+                        chapter.scenes.splice(index, 1);
+                        selectedScene.value = null;
+                        saveModel();
+                    }
+                };
+                
+                // Обработка упоминаний в тексте сцены
+                const processMentions = (scene) => {
+                    scene.mentions = [];
+                    const mentionRegex = /@(\w+)/g;
+                    let match;
+                    
+                    while ((match = mentionRegex.exec(scene.text)) !== null) {
+                        const name = match[1];
+                        
+                        // Поиск персонажа
+                        const character = currentBook.value.characters.find(
+                            c => c.firstName === name || c.lastName === name || c.alias === name
+                        );
+                        
+                        // Поиск места
+                        const place = currentBook.value.places.find(p => p.name.includes(name));
+                        
+                        if (character) {
+                            scene.mentions.push({
+                                name: character.firstName,
+                                type: 'character',
+                                id: character.id,
+                                position: match.index
+                            });
+                        }
+                        
+                        if (place) {
+                            scene.mentions.push({
+                                name: place.name,
+                                type: 'place',
+                                id: place.id,
+                                position: match.index
+                            });
+                        }
+                    }
+                    
+                    saveModel();
+                };
+                
+                // Выбор персонажа
+                const selectCharacter = (character) => {
+                    selectedCharacter.value = character;
+                };
+                
+                // Добавление нового персонажа
+                const addCharacter = (type) => {
+                    const newId = Math.max(0, ...currentBook.value.characters.map(c => c.id)) + 1;
+                    const newCharacter = {
+                        id: newId,
+                        firstName: "Новый",
+                        lastName: "Персонаж",
+                        alias: "",
+                        age: 0, 
+                        gender: "мужской",
+                        hometown: "",
+                        type: type,
+                        description: ""
+                    };
+                    
+                    currentBook.value.characters.push(newCharacter);
+                    selectCharacter(newCharacter);
+                    saveModel();
+                };
+                
+                // Выбор места
+                const selectPlace = (place) => {
+                    selectedPlace.value = place;
+                };
+                
+                // Добавление нового места
+                const addPlace = () => {
+                    const newId = Math.max(0, ...currentBook.value.places.map(p => p.id)) + 1;
+                    const newPlace = {
+                        id: newId,
+                        name: "Новое место",
+                        type: "",
+                        description: "",
+                        features: ""
+                    };
+                    
+                    currentBook.value.places.push(newPlace);
+                    selectPlace(newPlace);
+                    saveModel();
+                };
+                
+                // Рендеринг текста сцены для предпросмотра
+                const renderSceneText = (scene) => {
+                    let text = scene.text;
+                    
+                    // Обработка упоминаний
+                    if (scene.mentions && scene.mentions.length) {
+                        scene.mentions.forEach(mention => {
+                            const regex = new RegExp(`@${mention.name}`, 'g');
+                            text = text.replace(regex, `<span class="mention">@${mention.name}</span>`);
+                        });
+                    }
+                    
+                    // Разбивка на абзацы
+                    return text.split('\n').map(paragraph => 
+                        `<p>${paragraph || '<br>'}</p>`
+                    ).join('');
+                };
+                
+                // Экспорт книги в Markdown
+                const exportToMarkdown = () => {
+                    let markdown = `# ${currentBook.value.title}\n\n`;
+                    
+                    currentBook.value.chapters.forEach(chapter => {
+                        markdown += `## ${chapter.name}\n`;
+                        markdown += `${chapter.description}\n\n`;
+                        
+                        chapter.scenes.forEach(scene => {
+                            markdown += `### ${scene.name}\n`;
+                            markdown += `${scene.text}\n\n`;
+                        });
+                    });
+                    
+                    const blob = new Blob([markdown], { type: 'text/markdown' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${currentBook.value.title.replace(/\s+/g, '_')}.md`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                };
+                
+                // Сохранение модели в localStorage
+                const saveModel = () => {
+                    localStorage.setItem('novelcraft_model', JSON.stringify(model));
+                };
+                
+                // Автосохранение при изменении модели
+                watch(model, () => {
+                    saveModel();
+                }, { deep: true });
+                
+                // Инициализация текущего роута из hash
+                if (window.location.hash) {
+                    currentRoute.value = window.location.hash;
+                }
+                
+                return {
+                    menuItems,
+                    currentRoute,
+                    sidebarOpen,
+                    books: computed(() => model.books),
+                    currentBook,
+                    selectedChapter,
+                    selectedScene,
+                    selectedCharacter,
+                    selectedPlace,
+                    navigate,
+                    toggleSidebar,
+                    selectBook,
+                    addBook,
+                    selectChapter,
+                    addChapter,
+                    addScene,
+                    removeScene,
+                    processMentions,
+                    selectCharacter,
+                    addCharacter,
+                    selectPlace,
+                    addPlace,
+                    renderSceneText,
+                    exportToMarkdown
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
 </html>
